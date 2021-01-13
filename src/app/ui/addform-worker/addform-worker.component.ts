@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MyWorkerType, MyWorker } from 'src/app/shared/worker.model';
 
 @Component({
@@ -8,10 +9,13 @@ import { MyWorkerType, MyWorker } from 'src/app/shared/worker.model';
 })
 export class AddformWorkerComponent implements OnInit {
   myWorkerType = MyWorkerType;
-  name: string;
-  surname: string;
-  type = 0;
-
+  MyFormAdd : FormGroup = new FormGroup({
+    "phone" : new FormControl ("", Validators.required),
+    "name" : new FormControl ("", Validators.required),
+    "surname" : new FormControl ("", Validators.required),
+    "type" : new FormControl (0, Validators.required),
+  })
+  public mask = ['+', '7', ' ', '(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, '-', /\d/, /\d/];
   @Output() addWorker = new EventEmitter<MyWorker>();
 
   constructor() {}
@@ -20,9 +24,10 @@ export class AddformWorkerComponent implements OnInit {
 
   onAddWorker() {
     this.addWorker.emit({
-      name: this.name,
-      surname: this.surname,
-      type: this.type,
+      name: this.MyFormAdd.controls["name"].value,
+      surname: this.MyFormAdd.controls["surname"].value,
+      type: this.MyFormAdd.controls["type"].value,
+      phone: this.MyFormAdd.controls["phone"].value
     });
   }
 }

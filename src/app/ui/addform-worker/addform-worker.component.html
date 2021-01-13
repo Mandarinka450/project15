@@ -1,3 +1,4 @@
+<form [formGroup] = "MyFormAdd">
 <div class="row mb-3">
   <div class="col-12">
     <h5>Добавить сотрудника</h5>
@@ -6,8 +7,18 @@
     <input
       type="text"
       class="form-control"
+      pattern="^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){11}(\s*)?$"
+      placeholder="Телефон"
+      formControlName="phone"
+      [textMask]="{mask: mask}"
+    />
+  </div>
+  <div class="col-4">
+    <input
+      type="text"
+      class="form-control"
       placeholder="Имя"
-      [(ngModel)]="name"
+      formControlName="name"
     />
   </div>
   <div class="col-4">
@@ -15,11 +26,11 @@
       type="text"
       class="form-control"
       placeholder="Фамилия"
-      [(ngModel)]="surname"
+      formControlName="surname"
     />
   </div>
   <div class="col-4">
-    <select class="custom-select" [(ngModel)]="type">
+    <select class="custom-select" formControlName="type">
       <option [ngValue]="myWorkerType.programmer">Программист</option>
       <option [ngValue]="myWorkerType.designer">Дизайнер</option>
       <option [ngValue]="myWorkerType.copywriter">Рекламщик</option>
@@ -27,6 +38,10 @@
     </select>
   </div>
   <div class="col-12 mt-1">
-    <button class="btn btn-outline-primary btn-sm" (click)="onAddWorker()">Добавить</button>
+    <button class="btn btn-outline-primary btn-sm" [disabled]="MyFormAdd.controls['name'].invalid || MyFormAdd.controls['surname'].invalid || MyFormAdd.controls['phone'].invalid" (click)="onAddWorker()">Добавить</button>
   </div>
+  <div class="alert alert-danger" *ngIf="MyFormAdd.controls['name'].invalid && MyFormAdd.controls['name'].touched">Не указано имя!</div> 
+ <div class="alert alert-danger" *ngIf="MyFormAdd.controls['surname'].invalid && MyFormAdd.controls['surname'].touched">Не указана фамилия!</div> 
+ <div class="alert alert-danger" *ngIf="MyFormAdd.controls['phone'].invalid && MyFormAdd.controls['phone'].touched">Не указан телефон!</div> 
 </div>
+</form>

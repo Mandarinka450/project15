@@ -5,6 +5,7 @@
     </div>
   </div>
   <app-addform-worker (addWorker)="onAddWorker($event)"></app-addform-worker>
+  <app-edit-worker (editWorker)="onEditWorker($event)"></app-edit-worker>
   <app-table-workers
     [title]="'Программисты'"
     [workers]="getByType(myWorkerType.programmer)"

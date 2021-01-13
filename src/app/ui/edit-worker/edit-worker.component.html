@@ -1,0 +1,77 @@
+<form [formGroup] = "MyForm">
+<div class="row mb-3">
+    <div class="col-12">
+      <h5>Редактировать запись</h5>
+    </div>
+    <div class="col-4" >
+        <input style="margin: 5% 0%;"
+        required
+          type="number"
+          class="form-control"
+          placeholder="id сотрудника"
+          formControlName="editid"
+          name="editid"
+        />
+      </div>
+      <div class="col-4" >
+        <input style="margin: 5% 0%;"
+        required
+          type="text"
+          class="form-control"
+          pattern="^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){11}(\s*)?$"
+          placeholder="номер телефона"
+          formControlName="editphone"
+          [textMask]="{mask: mask}"
+          name="editphone"
+        />
+      </div>
+    <div class="col-4">
+      <input style="margin: 5% 0%;"
+      required
+        type="text"
+        class="form-control"
+        placeholder="Имя"
+        name="editname"
+        formControlName="editname"
+        required
+      />
+    </div>
+    <div class="col-4">
+      <input style="margin: 5% 0%;"
+      required
+        type="text"
+        class="form-control"
+        placeholder="Фамилия"
+        formControlName="editsurname"
+        name="editsurname"
+        required
+      />
+    </div>
+    <div class="col-4" style="margin: 1% 0%;">
+      <select class="custom-select" formControlName="type" required>
+        <option [ngValue]="myWorkerType.programmer">Программист</option>
+        <option [ngValue]="myWorkerType.designer">Дизайнер</option>
+        <option [ngValue]="myWorkerType.copywriter">Рекламщик</option>
+        <option [ngValue]="myWorkerType.manager">Менеджер</option>
+      </select>
+    </div>
+    <div class="col-12 mt-1" style="margin: 1% 0%;">
+      <button class="btn btn-outline-primary btn-sm" [disabled] = "MyForm.controls['editname'].invalid || MyForm.controls['editsurname'].invalid || MyForm.controls['editid'].invalid || MyForm.controls['editphone'].invalid" (click)="onEditWorker()">Редактировать</button>
+    </div>
+  </div>
+  <div class="alert alert-danger"
+    *ngIf="MyForm.controls['editsurname'].invalid && MyForm.controls['editsurname'].touched">
+    Не введена фамилия сотрудника!
+  </div>
+  <div class="alert alert-danger"
+  *ngIf="MyForm.controls['editid'].invalid && MyForm.controls['editid'].touched">
+    Некорректный идентификатор сотрудника!
+  </div>
+  <div class="alert alert-danger" *ngIf="MyForm.controls['editphone'].invalid && MyForm.controls['editphone'].touched">
+    Не указан телефон
+  </div>
+  <div class="alert alert-danger"
+    *ngIf="MyForm.controls['editname'].invalid && MyForm.controls['editname'].touched">
+    Не введено имя сотрудника!
+  </div>
+</form>
